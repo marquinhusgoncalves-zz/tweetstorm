@@ -1,35 +1,38 @@
-(function () {
-  'use strcit';
+(() => {
+  'use strict';
 
   const send = document.querySelector('.send');
   const del = document.querySelector('.delete');
+  const twitterStormElement = document.querySelector('.twitterstorm');
 
-  del.addEventListener('click', function (e) {
+  const clearTweetStorm = () => twitterStormElement.innerHTML = '';
+
+  del.addEventListener('click', (e) => {
     e.preventDefault();
-    const twitterStormElement = document.querySelector('.twitterstorm');
-    twitterStormElement.innerHTML = '';
+    clearTweetStorm();
   })
 
   send.addEventListener('click', function (e) {
     e.preventDefault();
+    clearTweetStorm();
 
     const inputElement = document.querySelector('#twitt');
     const twittValue = inputElement.value;
-    const twitterStormElement = document.querySelector('.twitterstorm');
     const valueMax = 140;
-    // const twittValue = 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker';
-    const numberOfTwittes = Math.ceil(twittValue.length / valueMax);
-    const quantityNumbersOfTwitt = numberOfTwittes.toString().length;
-    const quantitySpaceIndex = (quantityNumbersOfTwitt * 2) + 1;
-    const valueMaxWithIndex = valueMax - quantitySpaceIndex;
 
+    const numberOfTwittes = () => Math.ceil(twittValue.length / valueMax);
 
-    // First Solution
-    for (let i = 0, initialValueMaxIndex = 0, lastValueMaxIndex = valueMaxWithIndex; i < numberOfTwittes; i++) {
-      const generateTwittStorm = twittValue.slice(initialValueMaxIndex, lastValueMaxIndex);
-      initialValueMaxIndex += valueMaxWithIndex;
-      lastValueMaxIndex += valueMaxWithIndex
-      const twittStorm = (i + 1) + '/' + numberOfTwittes + ' ' + generateTwittStorm;
+    const quantityNumbersOfTwitt = () => numberOfTwittes().toString().length;
+
+    const quantitySpaceIndex = () => (quantityNumbersOfTwitt() * 2) + 1;
+
+    const valueMaxWithIndex = valueMax - quantitySpaceIndex();
+
+    const generateTwittStorm = (initialValueMaxIndex, lastValueMaxIndex) => twittValue.slice(initialValueMaxIndex, lastValueMaxIndex);
+
+    for (let i = 0, initialValueMaxIndex = 0, lastValueMaxIndex = valueMaxWithIndex; i < numberOfTwittes(); i++ , initialValueMaxIndex += valueMaxWithIndex, lastValueMaxIndex += valueMaxWithIndex) {
+      generateTwittStorm(initialValueMaxIndex, lastValueMaxIndex);
+      const twittStorm = `${(i + 1)}/${numberOfTwittes()} ${generateTwittStorm()}`;
       twitterStormElement.insertAdjacentHTML('beforeend', `<li class="collection-item">${twittStorm}</li>`);
     }
 
