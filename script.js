@@ -5,16 +5,13 @@
   const del = document.querySelector('.delete');
   const twitterStormElement = document.querySelector('.twitterstorm');
 
-  const clearTweetStorm = () => twitterStormElement.innerHTML = '';
-
-  del.addEventListener('click', (e) => {
+  const clearTweetStorm = (e) => {
     e.preventDefault();
-    clearTweetStorm();
-  })
+    twitterStormElement.innerHTML = '';
+  };
 
-  send.addEventListener('click', function (e) {
-    e.preventDefault();
-    clearTweetStorm();
+  const tweetStorm = (e) => {
+    clearTweetStorm(e);
 
     const inputElement = document.querySelector('#twitt');
     const twittValue = inputElement.value;
@@ -31,13 +28,14 @@
     const generateTwittStorm = (initialValueMaxIndex, lastValueMaxIndex) => twittValue.slice(initialValueMaxIndex, lastValueMaxIndex);
 
     for (let i = 0, initialValueMaxIndex = 0, lastValueMaxIndex = valueMaxWithIndex; i < numberOfTwittes(); i++ , initialValueMaxIndex += valueMaxWithIndex, lastValueMaxIndex += valueMaxWithIndex) {
-      generateTwittStorm(initialValueMaxIndex, lastValueMaxIndex);
-      const twittStorm = `${(i + 1)}/${numberOfTwittes()} ${generateTwittStorm()}`;
-      twitterStormElement.insertAdjacentHTML('beforeend', `<li class="collection-item">${twittStorm}</li>`);
+      twitterStormElement.insertAdjacentHTML('beforeend', `<li class="collection-item">${(i + 1)}/${numberOfTwittes()} ${generateTwittStorm(initialValueMaxIndex, lastValueMaxIndex)}</li>`);
     }
 
     inputElement.value = '';
+  }
 
-  })
+  del.addEventListener('click', clearTweetStorm);
+
+  send.addEventListener('click', tweetStorm)
 
 })();
