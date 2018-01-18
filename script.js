@@ -1,9 +1,16 @@
 (function () {
   'use strcit';
 
-  const btn = document.querySelector('.btn');
+  const send = document.querySelector('.send');
+  const del = document.querySelector('.delete');
 
-  btn.addEventListener('click', function (e) {
+  del.addEventListener('click', function (e) {
+    e.preventDefault();
+    const twitterStormElement = document.querySelector('.twitterstorm');
+    twitterStormElement.innerHTML = '';
+  })
+
+  send.addEventListener('click', function (e) {
     e.preventDefault();
 
     const inputElement = document.querySelector('#twitt');
